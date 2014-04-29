@@ -1,27 +1,27 @@
 (function (root, factory) {
-   if (typeof exports === 'object' && root.require) {
-     module.exports = factory(require("underscore"), require("backbone"));
-   } else if (typeof define === "function" && define.amd) {
-      // AMD. Register as an anonymous module.
-      define(["underscore","backbone"], function(_, Backbone) {
-        // Use global variables if the locals are undefined.
-        return factory(_ || root._, Backbone || root.Backbone);
-      });
-   } else {
-      // RequireJS isn't being used. Assume underscore and backbone are loaded in <script> tags
-      factory(_, Backbone);
-   }
+   if (typeof define === "function" && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(["underscore","backbone"], function(_, Backbone) {
+      // Use global variables if the locals are undefined.
+      return factory(_ || root._, Backbone || root.Backbone);
+    });
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require("underscore"), require("backbone"));
+  } else {
+    // RequireJS isn't being used. Assume underscore and backbone are loaded in <script> tags
+    factory(_, Backbone);
+  }
 }(this, function(_, Backbone) {
 
 var queryStringParam = /^\?(.*)/,
-    optionalParam = /\((.*?)\)/g,
-    namedParam    = /(\(\?)?:\w+/g,
-    splatParam    = /\*\w+/g,
-    escapeRegExp  = /[\-{}\[\]+?.,\\\^$|#\s]/g,
-    fragmentStrip = /^([^\?]*)/,
-    namesPattern = /[\:\*]([^\:\?\/]+)/g,
-    routeStripper = /^[#\/]|\s+$/g,
-    trailingSlash = /\/$/;
+    optionalParam    = /\((.*?)\)/g,
+    namedParam       = /(\(\?)?:\w+/g,
+    splatParam       = /\*\w+/g,
+    escapeRegExp     = /[\-{}\[\]+?.,\\\^$|#\s]/g,
+    fragmentStrip    = /^([^\?]*)/,
+    namesPattern     = /[\:\*]([^\:\?\/]+)/g,
+    routeStripper    = /^[#\/]|\s+$/g,
+    trailingSlash    = /\/$/;
 Backbone.Router.arrayValueSplit = '|';
 
 _.extend(Backbone.History.prototype, {
